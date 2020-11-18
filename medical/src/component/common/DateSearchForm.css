@@ -1,0 +1,17 @@
+.dateStyle
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dateBoxStyle
+{
+    display: flex;
+    line-height: 200%;
+}
+
+.btnStyle{
+    width: 10%;
+    height: 20%
+}

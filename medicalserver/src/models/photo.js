@@ -21,8 +21,14 @@ PhotoSchema.statics.findByfilename = function (filename)
 }
 PhotoSchema.statics.findBydate = function (date)
 {
-    return this.findOne({date})
+    return this.findOne({date});
 }
+
+PhotoSchema.statics.findByUserId = function (pid)
+{
+    return this.findOne({pid});
+}
+
 PhotoSchema.methods.getPName = function ()
 {
     return this.pname;

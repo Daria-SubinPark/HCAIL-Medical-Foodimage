@@ -2,15 +2,20 @@ const PhotoModel = require("../../models/photo");
 const PatientModel = require("../../models/patient");
 const moment = require("moment")
 
+// Todo 주어진 날짜에 특정한 사람이 찍은 사진 리스트 만드는
 
+// 사진 날짜로 검색해서 이름 리스트 반환
 exports.findPhotoByDate = (req, res)=>
 {
     try {
         console.log(typeof (req.body.enddate))
-        findByDateInDB(-100, req.body.startdate, req.body.enddate)
+        findByDateInDB(req.body.startdate, req.body.enddate)
             .then((list) => {
                 console.log("size:" + list.length)
-                res.send(list)
+                if(list)
+                    res.send(list)
+                else
+                    res.send(403)
             })
     } catch (err) {
         console.log(err)
@@ -18,6 +23,7 @@ exports.findPhotoByDate = (req, res)=>
     }
 }
 
+// 사진 이름으로 검색
 exports.findPhotoByName = async (req, res)=>
 {
     try
@@ -33,25 +39,49 @@ exports.findPhotoByName = async (req, res)=>
     }
 }
 
+// 특정한 사람이 특정한 날짜에 찍은 사진 반환
 exports.findPhotoByDateForUser = async (req, res) =>
 {
     try
     {
-        findByDateInDB(req.body.pname, req.body.startdate, req.body.enddate)
+        findByDateforUserInDB(req.body.pid, req.body.startdate, req.body.enddate) // Todo 수정
             .then((list) => {
                 console.log("size:" + list.length)
-                res.send(list)
+                if(list)
+                    res.send(list)
+                else
+                    res.send(403)
             })
     }
     catch(err)
     {
+        console.log(err)
+        res.send(400);
+    }
+}
+
+// 특정한 사람이 찍은 사진 전부 반환
+exports.findPhotoByUser = (req,res) =>
+{
+    try {
+        console.log(typeof (req.body.pid))
+        findByUser(req.body.pid)
+            .then((list) => {
+                console.log("size:" + list.length)
+                if(list)
+                    res.send(list)
+                else
+                    res.send(403)
+            })
+    } catch (err) {
         console.log(err)
         res.send(500);
     }
 }
 
 
-let findByDateInDB = async (pname, start, end) =>
+// 주어진 날짜에 사진을 찍은 사람들 이름 리스트 반환
+let findByDateInDB = async (start, end) =>
 {
     start = moment(start)
     end = moment(end)
@@ -60,10 +90,10 @@ let findByDateInDB = async (pname, start, end) =>
     {
         const dateRange = await end.diff(start, 'days');
         console.log(dateRange)
-        let imageSet = []
-        if(dateRange < 0)
+        let pNameSet = []
+        if(dateRange <= 0)
         {
-            console.log(500)
+            console.log("No date")
         }
         for(let step = 0; step > dateRange; step++)
         {
@@ -71,11 +101,62 @@ let findByDateInDB = async (pname, start, end) =>
             {
                 let targetDate = await start.setDate(start.getDate() + 1)
                 let photo = await PhotoModel.findBydate(targetDate);
-                if(pname === photo.getPName() || pname === -100)    imageSet.push(photo);
+                let pname = await PatientModel.findById(photo.pname)
+                pNameSet.push({filename:photo._id, pname: pname});
             }
             catch (e)   {console.log(e)}
         }
-        return imageSet
+        return pNameSet
+    }
+    catch(err)
+    {
+        console.log(err)
+    }
+}
+
+let findByDateforUserInDB = async (pid, start, end) =>
+{
+    try
+    {
+        let photoSet = []
+        const dateRange = await end.diff(start, 'days');
+        let result = []
+        let i = 0;
+
+        if(dateRange <= 0)
+        {
+            photoSet = await PhotoModel.findByUserId(pid)
+            console.log(dateRange)
+            console.log("No date")
+        }
+        for(let step = 0; step > dateRange; step++, i++)
+        {
+            try
+            {
+                let targetDate = await start.setDate(start.getDate() + 1)
+                if(photoSet[i].date == targetDate)
+                    result.push(photoSet[i])
+            }
+            catch (e)   {console.log(e)}
+        }
+        return result
+
+    }
+    catch(err)
+    {
+        console.log(err)
+    }
+}
+
+
+let findByUser = async (pid) =>
+{
+    try
+    {
+        let photoSet = []
+        photoSet = await PhotoModel.findByUserId(pid)
+
+        return photoSet
     }
     catch(err)
     {
