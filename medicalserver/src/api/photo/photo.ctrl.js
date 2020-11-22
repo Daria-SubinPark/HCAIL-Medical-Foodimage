@@ -2,8 +2,6 @@ const PhotoModel = require("../../models/photo");
 const PatientModel = require("../../models/patient");
 const moment = require("moment")
 
-// Todo 주어진 날짜에 특정한 사람이 찍은 사진 리스트 만드는
-
 // 사진 날짜로 검색해서 이름 리스트 반환
 exports.findPhotoByDate = (req, res)=>
 {

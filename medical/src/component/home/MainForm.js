@@ -17,6 +17,7 @@ function MainForm({history})
     const onChangePname = e =>
     {
         setPname(e.target.value)
+        console.log(localStorage.medical)
     }
     const onChangeStartDate = date =>
     {

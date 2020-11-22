@@ -14,9 +14,10 @@ function LoginForm({history})
         try
         {
             let medical = await searchUserToLogin(mid, pw);
-            if (!medical)
+            if (medical)
             {
                 await localStorage.setItem('medical', JSON.stringify(medical))
+                console.log(localStorage.medical)
                 await history.push('/home');
             }
             else

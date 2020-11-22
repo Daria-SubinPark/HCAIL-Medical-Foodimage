@@ -1,7 +1,7 @@
 import React from 'react';
 import {ListItem, ListItemText} from '@material-ui/core'
 
-function PhotoNameListForm({dataSet, startDate, endDate}) {
+function PhotoNameListForm({history, dataSet, startDate, endDate}) {
     console.log(dataSet)
 
     let saveDateandMid = async (pid) =>
