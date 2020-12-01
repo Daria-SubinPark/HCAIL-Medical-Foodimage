@@ -115,13 +115,16 @@ let addPhotoToDB=(data, callback)=>
     {
         // Make photo object
         let photo = new PhotoModel({
-            "photoname": data.name,
+            "filename": data.name,
             "latitude" : data.latitude,
             "longitude" : data.longitude,
             "date": data.date,
             "img" : data.photoStr,
             "encodeimg" : smallUrl,
-            "comment" : null,
+            "pcomment" : null,
+            "mcomment" : null,
+            mid: null,
+            pid: data.pid
         });
 
         // Save photo in photo DB
