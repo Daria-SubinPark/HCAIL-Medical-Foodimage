@@ -111,35 +111,32 @@ exports.findByUser = async (req, res) =>
 let addPhotoToDB=(data, callback)=>
 {
     console.log('AddPhoto : ' +data.name);
-    imageResize(data.photoStr).then((smallUrl)=>
-    {
         // Make photo object
-        let photo = new PhotoModel({
-            "filename": data.name,
-            "latitude" : data.latitude,
-            "longitude" : data.longitude,
-            "date": data.date,
-            "img" : data.photoStr,
-            "encodeimg" : smallUrl,
-            "pcomment" : null,
-            "mcomment" : null,
-            mid: null,
-            pid: data.pid
-        });
+    let photo = new PhotoModel({
+        "filename": data.name,
+        "latitude" : data.latitude,
+        "longitude" : data.longitude,
+        "date": data.date,
+        "img" : data.photoStr,
+        "pcomment" : null,
+        "mcomment" : null,
+        mid: null,
+        pid: data.pid
+    });
 
-        // Save photo in photo DB
-        photo.save(function (err)
+    // Save photo in photo DB
+    photo.save(function (err)
+    {
+        if(err)
         {
-            if(err)
-            {
-                callback(err, null);
-                console.log("Error");
-                return;
-            }
-            console.log("Success");
-            callback(null, photo);
-        })
+            callback(err, null);
+            console.log("Error");
+            return;
+        }
+        console.log("Success");
+        callback(null, photo);
     })
+
 }
 
 /**

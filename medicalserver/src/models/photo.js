@@ -8,7 +8,6 @@ const PhotoSchema = new Schema({
     latitude : String,
     longitude: String,
     img : String,
-    encodeimg : String,
     pcomment : String,
     mcomment : String,
     mid : String,
