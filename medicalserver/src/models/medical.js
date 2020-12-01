@@ -10,7 +10,7 @@ const MedicalSchema = new Schema(
     }
 )
 
-MedicalSchema.static.findByloginid = function (loginid)
+MedicalSchema.statics.findByloginid = function (loginid)
 {
     return this.findOne({loginid})
 }
