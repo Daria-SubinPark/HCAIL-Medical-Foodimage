@@ -47,6 +47,7 @@ exports.mLogin = async (req, res)=>
     {
         // Check id is in DB, otherwise send 401
         const user = await MedicalModel.findByloginid(req.body.id);
+        console.log(user)
         if(!user)
         {
             res.send(401);
