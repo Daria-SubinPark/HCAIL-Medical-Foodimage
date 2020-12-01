@@ -3,7 +3,7 @@ const client = axios.create();
 
 export const searchPhotoByName=(imgname)=>
 {
-    client.post('/name', {name: imgname})
+    client.post('/photo/name', {name: imgname})
         .then((response)=>
         {
             console.log(response)
@@ -14,7 +14,7 @@ export const searchPhotoByName=(imgname)=>
 
 export const searchPhotoByDate=(startdate, enddate)=>
 {
-    client.post('/date', {startdate: startdate, enddate: enddate})
+    client.post('/photo/date', {startdate: startdate, enddate: enddate})
         .then(function(response)
         {
             console.log(response)
@@ -26,7 +26,7 @@ export const searchPhotoByDate=(startdate, enddate)=>
 
 export const searchPhotoByDateinUser = (pid, startdate, enddate) =>
 {
-    client.post('/dateforpatient', {pid: pid, startdate: startdate, enddate: enddate})
+    client.post('/photo/dateforpatient', {pid: pid, startdate: startdate, enddate: enddate})
         .then(function (response)
         {
             console.log(response)
@@ -39,7 +39,7 @@ export const searchPhotoByDateinUser = (pid, startdate, enddate) =>
 
 export const searchPhotoByUser = (pid) =>
 {
-    client.post('/photo', {pid: pid})
+    client.post('/photo/photo', {pid: pid})
         .then(function (response)
         {
             console.log(response)

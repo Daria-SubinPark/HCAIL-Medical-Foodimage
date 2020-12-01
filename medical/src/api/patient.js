@@ -3,7 +3,7 @@ const client = axios.create();
 
 const searchPatientByName=(imgname)=>
 {
-    client.post('/name', {name: imgname})
+    client.post('/patient/user', {name: imgname})
         .then((response)=>
         {
             console.log(response)
