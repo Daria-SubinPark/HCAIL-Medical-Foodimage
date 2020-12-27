@@ -14,23 +14,24 @@ const PhotoSchema = new Schema({
     pid : String,
 })
 
-PhotoSchema.statics.findByfilename = function (filename)
+PhotoSchema.statics.findByDate = function (start, end)
 {
-    return this.findOne({filename});
-}
-PhotoSchema.statics.findBydate = function (date)
-{
-    return this.findOne({date});
+    return this.findOne({ date: { $gt: start, $lt: end } } );
 }
 
-PhotoSchema.statics.findByUserId = function (pid)
+PhotoSchema.statics.findByPid = function (pid)
 {
     return this.findOne({pid});
 }
 
-PhotoSchema.methods.getPName = function ()
+PhotoSchema.static.findPhoto = function (pid, start, end)
 {
-    return this.pname;
+    return this.findOne({ pid: pid, date: { $gt: start, $lt: end } } );
+}
+
+PhotoSchema.methods.getFileName = function ()
+{
+    return this.filename;
 }
 
 PhotoSchema.statics.findById = function (_id)

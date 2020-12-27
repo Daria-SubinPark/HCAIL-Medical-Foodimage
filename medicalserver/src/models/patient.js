@@ -20,6 +20,11 @@ PatientSchema.statics.findByUserName = function (pname)
     return this.findOne({pname});
 }
 
+PatientModel.statics.findByPid = function (_id)
+{
+    return this.findOne({_id});
+}
+
 PatientSchema.methods.checkUser = function (password)
 {
     return this.ppassword === password;

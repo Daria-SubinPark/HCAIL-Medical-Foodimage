@@ -10,9 +10,9 @@ const MedicalSchema = new Schema(
     }
 )
 
-MedicalSchema.statics.findByloginid = function (loginid)
+MedicalSchema.statics.findByloginid = function (mloginid)
 {
-    return this.findOne({loginid})
+    return this.findOne({mloginid})
 }
 
 MedicalSchema.methods.checkUser = function (password)
@@ -26,7 +26,7 @@ MedicalSchema.methods.getName = function () {
 
 MedicalSchema.methods.serialize = function () {
     const data = this.toJSON();
-    delete data.userPassword;
+    delete data.mpassword;
     return data;
 };
 const MedicalModel = mongoose.model("Medicalmodel", MedicalSchema)
