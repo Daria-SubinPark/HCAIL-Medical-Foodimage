@@ -24,9 +24,9 @@ PhotoSchema.statics.findByPid = function (pid)
     return this.findOne({pid});
 }
 
-PhotoSchema.static.findPhoto = function (pid, start, end)
+PhotoSchema.statics.findPhoto = function (pid, start, end)
 {
-    return this.findOne({ pid: pid, date: { $gt: start, $lt: end } } );
+    return this.find({ pid: pid, date: { $gt: start, $lt: end } } );
 }
 
 PhotoSchema.methods.getFileName = function ()

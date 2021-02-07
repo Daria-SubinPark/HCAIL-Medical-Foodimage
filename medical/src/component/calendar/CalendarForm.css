@@ -1,0 +1,30 @@
+.Button
+{
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-left: 3%;
+}
+
+.Calendarbox
+{
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    justify-content: center;
+}
+
+
+.Calendar
+{
+    width: 70%;
+}
+
+.Pnamebox
+{
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    justify-content: center;
+    margin-bottom: 3%;
+}

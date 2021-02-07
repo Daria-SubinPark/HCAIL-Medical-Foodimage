@@ -1,4 +1,5 @@
 const PhotoModel = require("../../models/photo");
+let fs = require('fs');  
 
 /**
  * POST api/photo/find
@@ -12,17 +13,17 @@ exports.findPhoto = async (req, res) =>
     {
         let start = req.body.start;
         let end = req.body.end;
+        let pid = req.body.pid;
         let photoList = [];
+        console.log(start, end, pid)
         
-        if(start == 0 || end == 0) // using pid
-            photoList = await PhotoModel.findByPid(pid)
-        else if(pid == null) // using date
+        if(pid == null) // using date
             photoList = await PhotoModel.findByDate(start, end)
         else // user date and pid
             photoList = await PhotoModel.findPhoto(pid, start, end)
-        
+        if(!photoList[0])
+            photoList = [photoList]
         res.send(photoList)
-
     }
     catch(err)
     {
@@ -65,10 +66,13 @@ exports.savePhoto = async (req, res) =>
  */
 let addPhotoToDB= async (data, callback)=>
 {
-    await console.log(data.pid);
     // Make photo object
-    let photo = await new PhotoModel(data);
-
+    let photo = new PhotoModel(data);
+    let filename = __dirname + "/../../../img/" + data.filename.toString().replace(' ', '_') + ".png"
+    filename = await base64_decode(data.img, filename)
+    photo.img = 'save'
+    console.log(filename)
+    
     // Save photo in photo DB
     await photo.save(function (err)
     {
@@ -86,3 +90,11 @@ let addPhotoToDB= async (data, callback)=>
   })
 }
 
+let base64_decode = (base64str, file) =>
+{  
+    console.log(typeof base64str)
+    let bitmap = new Buffer(base64str, 'base64');  
+    // 버퍼의 파일을 쓰기  
+    fs.writeFileSync(file, bitmap);  
+    return file;
+}  

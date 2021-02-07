@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, TextField} from '@material-ui/core';
 import "./LoginForm.css"
-import searchUserToLogin from "../../api/auth";
+import {loginUser} from "../../api/auth";
 
 function LoginForm({history})
 {
@@ -13,15 +13,18 @@ function LoginForm({history})
     {
         try
         {
-            let medical = await searchUserToLogin(mid, pw);
-            if (medical != 401)
+            let medical = await loginUser(mid, pw);
+            if (medical === 401 || medical === 500)
             {
-                await localStorage.setItem('medical', JSON.stringify(medical))
+                setStr("아이디 혹은 비밀번호를 찾을 수 없습니다.")  
+                return;
+            }
+            else
+            {
+                localStorage.setItem('medical', JSON.stringify(medical))
                 console.log(localStorage.medical)
                 await history.push('/home');
             }
-            else
-                await setStr("아이디 혹은 비밀번호를 찾을 수 없습니다.")
         }
         catch (e) {
             console.log(e)

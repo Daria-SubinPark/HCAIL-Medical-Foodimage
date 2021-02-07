@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {TextField, ListItem, ListItemText} from '@material-ui/core'
-import {sendComment} from "../../api/photo";
+import saveComment from "../../api/comment";
 
 function CommentForm({tile}) {
     const [comment, setComment] = useState('');
@@ -13,15 +13,15 @@ function CommentForm({tile}) {
 
     return (
         <div>
-            <ListItem button onClick={()=>sendComment(tile._id, tile.mid, comment)} style={{backgroundColor: 'green'}}>
-                <ListItemText primary={"Send"} style={{color: 'white'}} />
+            <ListItem button onClick={()=>saveComment(tile._id, localStorage.medical.__id, comment)} style={{weight:"auto", backgroundColor: 'green'}}>
+                <ListItemText primary={"저장"} style={{color: 'white'}} />
             </ListItem>
             <TextField
                 id="outlined-multiline-static"
                 multiline
                 rows={4}
                 defaultValue="Default Value"
-                style={{ margin: 8, height: 'auto' }}
+                style={{ height: 'auto' }}
                 variant="outlined"
                 fullWidth
                 onChange={onChangeComment}

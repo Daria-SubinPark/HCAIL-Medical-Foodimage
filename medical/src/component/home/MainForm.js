@@ -1,70 +1,86 @@
-import React, {useState} from 'react';
-import NameSearchForm from '../common/NameSearchForm';
-import DateSearchForm from '../common/DateSearchForm';
-import PhotoNameListForm from '../common/PhotoNameListForm';
-import searchPatientByName from '../../api/patient';
-import {searchPhotoByDate} from "../../api/photo";
+import React, {useState, useEffect} from 'react';
+import SearchForm from "../common/SearchForm"
+import AuthForm from "../common/AuthForm"
+import PNameListForm from '../list/PNameListForm';
+
+import {getAllUser} from "../../api/auth"
+
 
 import "./MainForm.css";
 
 function MainForm({history})
 {
     const [pname, setPname] = useState('');
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date(0));
     const [endDate, setEndDate] = useState(new Date());
-    const [dataSet, setDataSet] = useState([]);
+    const [patientList, setPatientList] = useState([]);
+    
+    const onChangePname = e => { setPname(e.target.value) }
 
-    const onChangePname = e =>
-    {
-        setPname(e.target.value)
-        console.log(localStorage.medical)
-    }
     const onChangeStartDate = date =>
     {
         setStartDate(date)
         localStorage.setItem('startDate', JSON.stringify(startDate))
     }
+
     const onChangeEndDate = date =>
     {
         setEndDate(date)
         localStorage.setItem('endDate', JSON.stringify(endDate))
     }
 
-    const getPimage = async () =>
+    const searchPhoto = async () =>
     {
-        let data = await searchPatientByName(pname);
-        setDataSet([data])
+        console.log("good")
     }
 
-    const getPlist = async () =>
+    const getNameList = async () =>
     {
-        let data = await searchPhotoByDate(startDate,endDate);
-        setDataSet([data])
+        let patient = await getAllUser();
+        setPatientList(patient)
     }
+
+    let skipToCalender = async (data) =>
+    {
+        localStorage.setItem('patient', JSON.stringify(data))
+        console.log(localStorage.patient)
+        await history.push('/calendar');
+    }
+
+
+    useEffect(() => {
+        getNameList();
+    },[])
+
+    useEffect(() => {
+        console.log(patientList)
+    }, [patientList])
 
     return (
         <div className="MainForm">
+            <AuthForm />
             <div className="Container">
-                <NameSearchForm
+                <SearchForm
                     pname={pname}
                     onChangePname={onChangePname}
-                    getPimage={getPimage}
-                />
-                <DateSearchForm
                     startDate={startDate}
                     endDate={endDate}
                     onChangeStartDate={onChangeStartDate}
                     onChangeEndDate={onChangeEndDate}
-                    getPlist={getPlist}
+                    searchPhoto={searchPhoto}
                 />
-                <PhotoNameListForm
-                    dataSet = {dataSet}
+                <PNameListForm
+                    dataSet = {patientList}
                     startDate={startDate}
                     endDate={endDate}
+                    nextPage={skipToCalender}
                 />
+                
             </div>
         </div>
     )
 }
 
 export default MainForm;
+
+//<PhotoListForm tileData={tileData}/>

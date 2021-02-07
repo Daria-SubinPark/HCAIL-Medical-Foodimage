@@ -25,6 +25,7 @@ app.use(cors());
 
 app.use("", api);
 
+app.use(express.static('img'));
 
 mongoose.connect("mongodb://localhost:27017/FRdb",
     {

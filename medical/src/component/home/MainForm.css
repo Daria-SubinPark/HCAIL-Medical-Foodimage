@@ -1,13 +1,11 @@
 .MainForm
 {
-    display: flex;
     text-align: center;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
     margin-bottom: 15%;
-    margin-top: 15%;
 }
 
 .Container

@@ -1,12 +1,12 @@
 const PhotoModel = require("../../models/photo");
 
 /**
- * POST api/medical/sendcomment
+ * POST api/comment/
  *
- * @param req "{ fid: String(_id), mid: String(_id), mcomment: String, }"
+ * @param req "{ photoid: String(_id), mid: String(_id), mcomment: String, }"
  * @param res Send 200 if save comment in DB, otherwise send 500
  */
-exports.sendComment = async (req,res)=>
+exports.saveComment = async (req,res)=>
 {
     try
     {
@@ -19,7 +19,7 @@ exports.sendComment = async (req,res)=>
         photo.mid = await req.body.mid;
 
         // Send 200 if photo successfully save object in DB, otherwise send 500
-        data.save(function (err)
+        photo.save(function (err)
         {
             if(err)
             {
