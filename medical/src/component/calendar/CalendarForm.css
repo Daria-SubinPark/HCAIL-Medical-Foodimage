@@ -1,3 +1,20 @@
+.root
+{
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+.MainBox
+{
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-left: 9%;
+    margin-bottom: 10%;
+}
 .Button
 {
     justify-content: center;
@@ -17,7 +34,7 @@
 
 .Calendar
 {
-    width: 70%;
+    width: 80%;
 }
 
 .Pnamebox

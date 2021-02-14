@@ -55,7 +55,7 @@ function CalendarForm({history}) {
     },[value])
 
     return (
-        <div>   
+        <div className="root">
             <AuthForm />
             <div className="Button"> 
                 <Button 
@@ -66,18 +66,20 @@ function CalendarForm({history}) {
                         이전
                 </Button>
             </div>
-            <div className="Pnamebox">   
-                환자 이름 : {target.pname}
+            <div className="MainBox">
+                <div className="Pnamebox">
+                    환자 이름 : {target.pname}
+                </div>
+                <div className='Calendarbox'>
+                    <Calendar
+                        className='Calendar'
+                        onChange={onChange}
+                        value={value}
+                        calendarType="US"
+                    />
+                </div>
+                <PhotoListForm tileData={tileData}/>
             </div>
-            <div className='Calendarbox'>
-                <Calendar
-                    className='Calendar'
-                    onChange={onChange}
-                    value={value}
-                    calendarType="US"
-                />
-            </div>
-            <PhotoListForm tileData={tileData}/>
         </div>
     );
 }

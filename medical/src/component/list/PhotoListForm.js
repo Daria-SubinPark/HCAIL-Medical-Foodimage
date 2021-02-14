@@ -3,6 +3,8 @@ import moment from 'moment';
 import {GridList, GridListTile, GridListTileBar, ListSubheader} from '@material-ui/core'
 import {makeStyles} from "@material-ui/core/styles";
 import CommentForm from "../common/CommentForm";
+import sample1 from "./img/sample1.png"
+import sample2 from "./img/sample2.png"
 
 const useStyles = makeStyles((theme) =>
     ({
@@ -15,7 +17,7 @@ const useStyles = makeStyles((theme) =>
         },
         gridList: {
             display: 'flex',
-            width: "200px",
+            width: "300px",
             height: "auto",
             justifyContent: 'center',
             alignItems : 'center'
@@ -29,8 +31,13 @@ const useStyles = makeStyles((theme) =>
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            margin: "auto",
+            marginRight: "5px",
             alignItems : 'center'
+        },
+        columnbox: {
+            display: 'flex',
+            justifyContent: 'center',
+
         }
     }));
 
@@ -41,33 +48,64 @@ function PhotoListForm({tileData}) {
     console.log(tileData)
 
     return (
-        tileData.length != 0 ?(
-        <div>
+        tileData[0] !== [] || tileData.length === 0 ?(
             <GridList cellHeight='auto' className={{width: "auto"}} cols={1}>
                 <GridListTile key="Subheader" cols={1} className={classes.gridList}>
-                    <ListSubheader component="div">사진 목록</ListSubheader>
+                    <ListSubheader component="div">샘플</ListSubheader>
                 </GridListTile>
-                    <div>
-                        {tileData.map((tile) => (
-                            <div className = {classes.titlebox}>
-                                <GridListTile key={tile.img} className={classes.gridList}>
-                                    <img src={"https://frserver.hcail.ml/"+tile.filename+".png"} alt={tile.filename} />
-                                    <GridListTileBar
-                                        className= {classes.titleBar}
-                                        title={""}
-                                        subtitle={<span>date: {moment(tile.date).format('YYYY MM DD HH:mm:ss')}</span>}
-                                    />
-                                </GridListTile>
-                                <CommentForm
-                                    tile = {tile}
-                                />
-                            </div>
-                            
-                        ))}
+                <div className={classes.columnbox}>
+                    <div className = {classes.titlebox}>
+                        <GridListTile key={sample1} className={classes.gridList}>
+                            <img src={sample1} alt={"sample1-before"} />
+                            <GridListTileBar
+                                className= {classes.titleBar}
+                                title={"sample1-before"}
+                                subtitle={<span>date: {moment(new Date()).format('YYYY MM DD HH:mm:ss')}</span>}
+                            />
+                        </GridListTile>
                     </div>
+                    <div className = {classes.titlebox}>
+                        <GridListTile key={sample2} className={classes.gridList}>
+                            <img src={sample2} alt={"sample2-before"} />
+                            <GridListTileBar
+                                className= {classes.titleBar}
+                                title={"sample2-after"}
+                                subtitle={<span>date: {moment(new Date()).format('YYYY MM DD HH:mm:ss')}</span>}
+                            />
+                        </GridListTile>
+                    </div>
+                    <CommentForm
+                        tile = {"none"}
+                    />
+                </div>
             </GridList>
-        </div>)
-        : (<div className = {classes.titlebox}>  사진 없음</div>)
+            )
+        :(
+            <div>
+                <GridList cellHeight='auto' className={{width: "auto"}} cols={1}>
+                        <GridListTile key="Subheader" cols={1} className={classes.gridList}>
+                            <ListSubheader component="div">사진 목록</ListSubheader>
+                        </GridListTile>
+                        <div>
+                            {tileData.map((tile) => (
+                                <div className = {classes.titlebox}>
+                                    <GridListTile key={tile.img} className={classes.gridList}>
+                                        <img src={"https://frserver.hcail.ml/"+tile.filename+".png"} alt={tile.filename} />
+                                        <GridListTileBar
+                                            className= {classes.titleBar}
+                                            title={""}
+                                            subtitle={<span>date: {moment(tile.date).format('YYYY MM DD HH:mm:ss')}</span>}
+                                        />
+                                    </GridListTile>
+                                    <CommentForm
+                                        tile = {tile}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </GridList>
+            </div>
+        )
     )
 }
 

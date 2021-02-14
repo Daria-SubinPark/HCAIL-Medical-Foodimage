@@ -13,13 +13,13 @@ function CommentForm({tile}) {
 
     return (
         <div>
-            <ListItem button onClick={()=>saveComment(tile._id, localStorage.medical.__id, comment)} style={{weight:"auto", backgroundColor: 'green'}}>
+            <ListItem button onClick={()=>saveComment(tile._id, localStorage.medical.__id, comment)} style={{backgroundColor: 'green'}}>
                 <ListItemText primary={"저장"} style={{color: 'white'}} />
             </ListItem>
             <TextField
                 id="outlined-multiline-static"
                 multiline
-                rows={4}
+                rows={7}
                 defaultValue="Default Value"
                 style={{ height: 'auto' }}
                 variant="outlined"
